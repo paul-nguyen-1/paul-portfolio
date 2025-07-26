@@ -8,8 +8,11 @@ export class GptController {
   constructor(private readonly gptService: GptService) {}
 
   @Post('respond-as-paul')
-  async respondAsPaul(@Body() body: { message: string }): Promise<string> {
+  async respondAsPaul(
+    @Body() body: { message: string },
+  ): Promise<{ reply: string }> {
     const system = buildPaulSystemPrompt(PAUL_PROFILE);
-    return await this.gptService.chatWithSystem(system, body.message);
+    const reply = await this.gptService.chatWithSystem(system, body.message);
+    return { reply };
   }
 }

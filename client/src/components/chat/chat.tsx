@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { scrollToBottom } from "../../utils";
+import { postData, scrollToBottom } from "../../utils";
 import { Header } from "./header";
+import { useMutation } from "@tanstack/react-query";
+import type { SendMessageInput, SendMessageResponse } from "../../types";
 
 const Chat = () => {
   const [messages, setMessages] = useState<
@@ -15,32 +17,37 @@ const Chat = () => {
     scrollToBottom(messagesEndRef);
   }, [messages, isTyping]);
 
+  const { mutate } = useMutation({
+    mutationFn: (payload: SendMessageInput) =>
+      postData<SendMessageResponse, SendMessageInput>(
+        `${import.meta.env.VITE_ALFRED_BACKEND_ENDPOINT}/gpt/respond-as-paul`,
+        payload
+      ),
+    onSuccess: (res) => {
+      setMessages((prev) => [...prev, { sender: "agent", text: res.reply }]);
+      setIsTyping(false);
+    },
+    onError: (error) => {
+      console.error("Mutation failed:", error);
+      setMessages((prev) => [
+        ...prev,
+        { sender: "agent", text: "Sorry, something went wrong." },
+      ]);
+      setIsTyping(false);
+    },
+  });
+
   const handleSend = () => {
     if (!input.trim()) {
       return;
     }
 
-    const messageToSend = input;
-    const userMessage: { sender: "user" | "agent"; text: string } = {
-      sender: "user",
-      text: messageToSend,
-    };
+    const userMessage = { sender: "user" as const, text: input };
     setMessages((prev) => [...prev, userMessage]);
-    setInput("");
     setIsTyping(true);
 
-    setTimeout(() => {
-      const agentMessage: { sender: "user" | "agent"; text: string } = {
-        sender: "agent",
-        text: `"${generateResponse(messageToSend)}"`,
-      };
-      setMessages((prev) => [...prev, agentMessage]);
-      setIsTyping(false);
-    }, 1000);
-  };
-
-  const generateResponse = (input: string): string => {
-    return `You said "${input}". How can I help further?`;
+    mutate({ message: input });
+    setInput("");
   };
 
   return (
@@ -80,6 +87,7 @@ const Chat = () => {
             Alfred is thinking...
           </motion.div>
         )}
+
         <div ref={messagesEndRef} />
       </div>
 
