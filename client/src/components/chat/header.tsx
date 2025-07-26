@@ -16,7 +16,7 @@ export function Header() {
       name: "NASA (Software Engineering Intern) - Spring 2025",
     },
     {
-      logo: "https://www.rappaportco.com/wp-content/uploads/2021/05/lucid-motors-logo-360x250-1.png",
+      logo: "https://media.licdn.com/dms/image/v2/C560BAQH7XEcX6E4M7w/company-logo_200_200/company-logo_200_200/0/1630642979756/lucidmotors_logo?e=1756339200&v=beta&t=zN-0pYxAUiElWsqCrtBzGHqRbWHwTyd58lUlnWXlleA",
       alt: "Lucid Motors Logo",
       name: "Lucid Motors (Software Engineering Intern) - Summer 2024 + Fall 2024",
     },
@@ -33,7 +33,7 @@ export function Header() {
 
   return (
     <>
-      <Card shadow="sm" padding="lg" radius="md">
+      <Card shadow="sm" padding="lg" className="rounded-none md:rounded-xl">
         <Card.Section className="relative">
           <Image
             src="https://rpmliving.com/wp-content/uploads/2021/12/houston-bg.png"
@@ -88,28 +88,30 @@ export function Header() {
         </Group>
       </Card>
 
-      <div className="mt-4 p-4 bg-gray-700 rounded-lg shadow-lg text-white flex items-center justify-between">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentExperience.name}
-            initial={{ opacity: 0, y: -20, rotateX: 90 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            exit={{ opacity: 0, y: 20, rotateX: -90 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center space-x-3"
-          >
-            <motion.img
-              key={currentExperience.logo}
-              src={currentExperience.logo}
-              alt={currentExperience.alt}
-              className="h-10 w-10 object-contain"
-              initial={{ opacity: 0, filter: "blur(8px)" }}
-              animate={{ opacity: 1, filter: "blur(0px)" }}
-              transition={{ duration: 0.8 }}
-            />
-            <Typing text={currentExperience.name} />
-          </motion.div>
-        </AnimatePresence>
+      <div className="flex justify-center mt-4 rounded-lg shadow-lg text-white items-center">
+        <div className="md:w-11/12 p-4 bg-gray-700 border border-gray-600 rounded-lg">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentExperience.name}
+              initial={{ opacity: 0, y: -20, rotateX: 90 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              exit={{ opacity: 0, y: 20, rotateX: -90 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center space-x-3"
+            >
+              <motion.img
+                key={currentExperience.logo}
+                src={currentExperience.logo}
+                alt={currentExperience.alt}
+                className="h-10 w-10 object-contain"
+                initial={{ opacity: 0, filter: "blur(8px)" }}
+                animate={{ opacity: 1, filter: "blur(0px)" }}
+                transition={{ duration: 0.8 }}
+              />
+              <Typing text={currentExperience.name} />
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </>
   );

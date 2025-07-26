@@ -44,7 +44,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="h-[90vh] w-4/5 md:w-2/5 bg-gray-800 text-white rounded-xl flex flex-col shadow-xl overflow-hidden">
+    <div className="md:h-[90vh] md:w-2/5 bg-gray-800 text-white md:rounded-xl flex flex-col shadow-xl overflow-hidden">
       <Header />
 
       <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-800">
@@ -83,13 +83,13 @@ const Chat = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="p-3 border-t border-gray-600 bg-gray-700 flex items-center gap-2">
+      <div className="p-2 border-t border-gray-600 bg-gray-700 flex items-center gap-2">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="flex-1 p-2 rounded-lg bg-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Type your message..."
+          placeholder="Ask me anything..."
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
         />
         <button
