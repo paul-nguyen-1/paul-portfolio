@@ -16,7 +16,7 @@ export function Header() {
       name: "NASA (Software Engineering Intern) - Spring 2025",
     },
     {
-      logo: "https://1000logos.net/wp-content/uploads/2021/11/Lucid-Motors-Logo.png",
+      logo: "https://www.rappaportco.com/wp-content/uploads/2021/05/lucid-motors-logo-360x250-1.png",
       alt: "Lucid Motors Logo",
       name: "Lucid Motors (Software Engineering Intern) - Summer 2024 + Fall 2024",
     },
@@ -88,12 +88,7 @@ export function Header() {
         </Group>
       </Card>
 
-      <Card
-        shadow="sm"
-        padding="lg"
-        radius="md"
-        className="mt-2 bg-gray-700 text-white"
-      >
+      <div className="mt-4 p-4 bg-gray-700 rounded-lg shadow-lg text-white flex items-center justify-between">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentExperience.name}
@@ -115,7 +110,7 @@ export function Header() {
             <Typing text={currentExperience.name} />
           </motion.div>
         </AnimatePresence>
-      </Card>
+      </div>
     </>
   );
 }
