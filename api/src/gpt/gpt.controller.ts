@@ -1,7 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { GptService } from './gpt.service';
-import { PAUL_PROFILE } from 'src/prompts/paul.profile';
-import { buildPaulSystemPrompt } from 'src/prompts/paul.system';
+import { PAUL_PROFILE } from '../prompts/paul.profile';
+import { buildPaulSystemPrompt } from '../prompts/paul.system';
 
 @Controller('gpt')
 export class GptController {
