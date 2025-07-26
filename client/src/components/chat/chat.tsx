@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { scrollToBottom } from "../../utils";
-import Header from "./header";
+import { Header } from "./header";
 
 const Chat = () => {
   const [messages, setMessages] = useState<
@@ -44,7 +44,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="h-[80vh] w-4/5 md:w-3/5 bg-gray-800 text-white rounded-xl flex flex-col shadow-xl overflow-hidden">
+    <div className="h-[90vh] w-4/5 md:w-2/5 bg-gray-800 text-white rounded-xl flex flex-col shadow-xl overflow-hidden">
       <Header />
 
       <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-800">
