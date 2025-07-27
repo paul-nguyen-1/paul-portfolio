@@ -28,7 +28,7 @@ export default function FloatingActionButton() {
     <div className="relative">
       <AnimatePresence>
         {open && (
-          <div className="absolute bottom-16 right-1 flex flex-col items-end space-y-2">
+          <div className="absolute bottom-16 flex flex-col items-end space-y-2">
             {actions.map((action, i) => (
               <motion.a
                 key={action.label}
@@ -56,7 +56,7 @@ export default function FloatingActionButton() {
         className="group bg-blue-600 hover:bg-blue-700 p-4 rounded-full shadow-xl text-white transition cursor-pointer"
       >
         <FiPlus
-          size={24}
+          size={12}
           className="transform transition-transform duration-300 group-hover:rotate-90"
         />
       </button>

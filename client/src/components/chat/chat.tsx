@@ -127,7 +127,7 @@ const Chat = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => handleSend()}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer"
+              className="bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600 transition cursor-pointer"
             >
               Send
             </button>
