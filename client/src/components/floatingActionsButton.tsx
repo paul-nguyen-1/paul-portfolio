@@ -5,17 +5,17 @@ import { Tooltip } from "@mantine/core";
 
 const actions = [
   {
-    icon: <FiMail className="text-white" size={20} />,
+    icon: <FiMail className="text-[#cfcfe7]" size={18} />,
     label: "Email",
     link: "mailto:paul.nguyen.swe@gmail.com",
   },
   {
-    icon: <FiLinkedin className="text-white" size={20} />,
+    icon: <FiLinkedin className="text-[#cfcfe7]" size={18} />,
     label: "LinkedIn",
     link: "https://www.linkedin.com/in/paul-nguyen--/",
   },
   {
-    icon: <FiGithub className="text-white" size={20} />,
+    icon: <FiGithub className="text-[#cfcfe7]" size={18} />,
     label: "GitHub",
     link: "https://github.com/paul-nguyen-1",
   },
@@ -41,7 +41,7 @@ export default function FloatingActionButton() {
                 transition={{ duration: 0.2, delay: i * 0.05 }}
               >
                 <Tooltip label={action.label} position="left" withArrow>
-                  <div className="bg-blue-600 hover:bg-blue-700 p-3 rounded-full shadow-lg transition">
+                  <div className="bg-[#2a2a3b] hover:bg-[#3b3b51] p-3 rounded-full shadow-lg transition">
                     {action.icon}
                   </div>
                 </Tooltip>
@@ -53,7 +53,7 @@ export default function FloatingActionButton() {
 
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="group bg-blue-600 hover:bg-blue-700 p-4 rounded-full shadow-xl text-white transition cursor-pointer"
+        className="group bg-[#2a2a3b] hover:bg-[#3b3b51] p-4 rounded-full shadow-xl text-white transition cursor-pointer"
       >
         <FiPlus
           size={12}

@@ -1,4 +1,4 @@
-import { Card, Image, Text, Badge, Group, Avatar } from "@mantine/core";
+import { Card, Image, Text, Badge, Avatar } from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
 import { getRotatingIndex } from "../../lib/utils/utils";
 import { Typing } from "../typing";
@@ -40,12 +40,12 @@ export function Header() {
 
   return (
     <>
-      <Card shadow="sm" padding="lg" className="rounded-none md:rounded-xl">
+      <Card shadow="sm" className="rounded-none md:rounded-xl">
         <Card.Section className="relative">
           <Image
             src="https://rpmliving.com/wp-content/uploads/2021/12/houston-bg.png"
             alt="Background"
-            className="md:h-50"
+            className="md:h-35"
           />
           <div className="absolute bottom-[-.5rem] left-5">
             <motion.div
@@ -69,42 +69,53 @@ export function Header() {
           </div>
         </Card.Section>
 
-        <Group justify="space-between" mt={8}>
-          <div className="flex space-x-2">
-            <div className="flex flex-col">
-              <Text size="xl" fw={500} fz={24} w={135}>
+        <div className="flex flex-col w-full">
+          <div className="flex justify-between items-center flex-wrap w-full h-12">
+            <div className="flex flex-row flex-wrap gap-2 items-center">
+              <Text size="xl" fw={500} fz={24}>
                 Paul Nguyen
               </Text>
-              <Text c="dimmed">Houston, Texas</Text>
-            </div>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={roles[roleIndex].label}
-                initial={{ opacity: 0, y: -20, rotateX: 90 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                exit={{ opacity: 0, y: 20, rotateX: -90 }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="relative top-2">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={roles[roleIndex].label}
+                  initial={{ opacity: 0, y: -20, rotateX: 90 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                  exit={{ opacity: 0, y: 20, rotateX: -90 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <Badge color={roles[roleIndex].color}>
                     {roles[roleIndex].label}
                   </Badge>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            <div>
+              <a
+                href={
+                  "https://siebelschool.illinois.edu/academics/graduate/professional-mcs"
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="https://brand.illinois.edu/wp-content/uploads/2024/02/Block-I-orange-blue-background.png"
+                  alt="UIUC Logo"
+                  className="block md:hidden h-8 w-8 relative left-2"
+                />
+                <img
+                  src="https://images.squarespace-cdn.com/content/v1/623126b50d2dfb281caaafd3/043c224d-520f-40be-a3b2-408ce588d8b6/University-of-Illinois-Urbana-Champaign-logo.jpg"
+                  alt="UIUC"
+                  className="md:block hidden h-14 w-full relative top-1.5"
+                />
+              </a>
+            </div>
           </div>
-
-          <div className="flex items-center space-x-2">
-            <img
-              src="https://brand.illinois.edu/wp-content/uploads/2024/02/Block-I-orange-blue-background.png"
-              alt="UIUC Logo"
-              className="h-10 w-10"
-            />
-            <Text className="md:w-50">
-              University of Illinois Urbana-Champaign
+          <div className="absolute bottom-1">
+            <Text c="dimmed" fw={500} fz={12}>
+              Houston, Texas
             </Text>
           </div>
-        </Group>
+        </div>
       </Card>
 
       <div className="flex justify-center mt-4 rounded-lg shadow-lg text-white">

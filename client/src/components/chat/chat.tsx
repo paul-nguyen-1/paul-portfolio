@@ -9,6 +9,7 @@ import type {
 } from "../../lib/utils/types";
 import FloatingActionButton from "../floatingActionsButton";
 import { LettersPullUp } from "../lettersPullUp";
+import { FiArrowUp, FiStopCircle } from "react-icons/fi";
 
 const Chat = () => {
   const [messages, setMessages] = useState<
@@ -122,7 +123,12 @@ const Chat = () => {
           </div>
         )}
 
-        <div className="flex items-center gap-2">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.75, ease: "easeOut" }}
+          className="flex items-center gap-2"
+        >
           <input
             type="text"
             value={input}
@@ -132,15 +138,24 @@ const Chat = () => {
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
           />
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => handleSend()}
-              className="bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600 transition cursor-pointer"
-            >
-              Send
-            </button>
+            {isTyping ? (
+              <button
+                disabled
+                className="bg-gray-600 text-gray-300 px-4 py-2 rounded-sm transition shadow-md cursor-not-allowed"
+              >
+                <FiStopCircle size={18} />
+              </button>
+            ) : (
+              <button
+                onClick={() => handleSend()}
+                className="bg-[#5b3cc4] hover:bg-[#483197] text-[#e6e6f5] px-4 py-2 rounded-sm transition cursor-pointer shadow-md"
+              >
+                <FiArrowUp size={18} />
+              </button>
+            )}
             <FloatingActionButton />
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
