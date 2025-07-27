@@ -98,7 +98,7 @@ const Chat = () => {
             }}
             className="bg-gray-600 text-white p-3 rounded-xl max-w-xs self-start mr-auto"
           >
-            Alfred is thinking...
+            Give me a second... im thinking
           </motion.div>
         )}
 

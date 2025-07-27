@@ -71,7 +71,12 @@ export function Header() {
 
         <div className="flex flex-col w-full">
           <div className="flex justify-between items-center flex-wrap w-full h-12">
-            <div className="flex flex-row flex-wrap gap-2 items-center">
+            <motion.div
+              initial={{ x: "100vw", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.75, ease: "easeOut" }}
+              className="flex flex-row flex-wrap gap-2 items-center"
+            >
               <Text size="xl" fw={500} fz={24}>
                 Paul Nguyen
               </Text>
@@ -88,12 +93,15 @@ export function Header() {
                   </Badge>
                 </motion.div>
               </AnimatePresence>
-            </div>
-            <div>
+            </motion.div>
+
+            <motion.div
+              initial={{ x: "-100vw", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.75, ease: "easeOut" }}
+            >
               <a
-                href={
-                  "https://siebelschool.illinois.edu/academics/graduate/professional-mcs"
-                }
+                href="https://siebelschool.illinois.edu/academics/graduate/professional-mcs"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -108,7 +116,7 @@ export function Header() {
                   className="md:block hidden h-14 w-full relative top-1.5"
                 />
               </a>
-            </div>
+            </motion.div>
           </div>
           <div className="absolute bottom-1">
             <Text c="dimmed" fw={500} fz={12}>
