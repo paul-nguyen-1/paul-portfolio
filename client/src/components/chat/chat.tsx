@@ -1,10 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { postData, scrollToBottom } from "../../utils";
+import { postData, scrollToBottom } from "../../lib/utils/utils";
 import { Header } from "./header";
 import { useMutation } from "@tanstack/react-query";
-import type { SendMessageInput, SendMessageResponse } from "../../types";
+import type {
+  SendMessageInput,
+  SendMessageResponse,
+} from "../../lib/utils/types";
 import FloatingActionButton from "../floatingActionsButton";
+import { LettersPullUp } from "../lettersPullUp";
 
 const Chat = () => {
   const [messages, setMessages] = useState<
@@ -109,7 +113,10 @@ const Chat = () => {
                 onClick={() => handleSend(question)}
                 className="bg-gray-600 hover:bg-gray-500 text-white text-sm px-3 py-1 rounded-lg transition cursor-pointer"
               >
-                {question}
+                <LettersPullUp
+                  text={question}
+                  className="text-sm font-medium"
+                />
               </button>
             ))}
           </div>

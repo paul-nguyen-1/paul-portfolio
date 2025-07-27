@@ -1,6 +1,6 @@
 import { Card, Image, Text, Badge, Group, Avatar } from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
-import { getRotatingIndex } from "../../utils";
+import { getRotatingIndex } from "../../lib/utils/utils";
 import { Typing } from "../typing";
 
 export function Header() {
