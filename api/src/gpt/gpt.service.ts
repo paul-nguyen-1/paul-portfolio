@@ -41,7 +41,7 @@ export class GptService {
           { role: 'system', content: system },
           { role: 'user', content: userMessage },
         ],
-        temperature: 0.6,
+        temperature: 0.7,
       },
       {
         headers: {

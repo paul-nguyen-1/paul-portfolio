@@ -38,18 +38,26 @@ const Chat = () => {
     },
   });
 
-  const handleSend = () => {
-    if (!input.trim()) {
+  const handleSend = (message?: string) => {
+    const content = message ?? input;
+    if (!content.trim()) {
       return;
     }
 
-    const userMessage = { sender: "user" as const, text: input };
+    const userMessage = { sender: "user" as const, text: content };
     setMessages((prev) => [...prev, userMessage]);
     setIsTyping(true);
-
-    mutate({ message: input });
+    mutate({ message: content });
     setInput("");
   };
+
+  const suggestedQuestions = [
+    "Can you give me a short intro about yourself?",
+    "What did you do at NASA?",
+    "What are your hobbies?",
+    "What are your strengths as an engineer?",
+    "Which tech stacks are you most experienced with?",
+  ];
 
   return (
     <div className="md:h-[90vh] md:w-2/5 bg-gray-800 text-white md:rounded-xl flex flex-col shadow-xl overflow-hidden">
@@ -92,23 +100,39 @@ const Chat = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="p-2 border-t border-gray-600 bg-gray-700 flex items-center gap-2">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1 p-2 rounded-lg bg-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Ask me anything..."
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
-        />
+      <div className="p-2 border-t border-gray-600 bg-gray-700 flex flex-col gap-2">
+        {messages.length === 0 && (
+          <div className="flex flex-wrap gap-2 mb-1">
+            {suggestedQuestions.map((question) => (
+              <button
+                key={question}
+                onClick={() => handleSend(question)}
+                className="bg-gray-600 hover:bg-gray-500 text-white text-sm px-3 py-1 rounded-lg transition cursor-pointer"
+              >
+                {question}
+              </button>
+            ))}
+          </div>
+        )}
+
         <div className="flex items-center gap-2">
-          <button
-            onClick={handleSend}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer"
-          >
-            Send
-          </button>
-          <FloatingActionButton />
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="flex-1 p-2 rounded-lg bg-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Ask me anything..."
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+          />
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handleSend()}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer"
+            >
+              Send
+            </button>
+            <FloatingActionButton />
+          </div>
         </div>
       </div>
     </div>
