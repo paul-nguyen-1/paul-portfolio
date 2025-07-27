@@ -13,23 +13,30 @@ export function Header() {
     {
       logo: "https://images.seeklogo.com/logo-png/19/2/nasa-logo-png_seeklogo-195796.png",
       alt: "NASA Logo",
-      name: "NASA (Software Engineering Intern) - Spring 2025",
+      name: "NASA (SWE Intern)",
+      duration: "Spring 2025",
+      link: "https://www.nasa.gov/",
     },
     {
       logo: "https://media.licdn.com/dms/image/v2/C560BAQH7XEcX6E4M7w/company-logo_200_200/company-logo_200_200/0/1630642979756/lucidmotors_logo?e=1756339200&v=beta&t=zN-0pYxAUiElWsqCrtBzGHqRbWHwTyd58lUlnWXlleA",
       alt: "Lucid Motors Logo",
-      name: "Lucid Motors (Software Engineering Intern) - Summer 2024 + Fall 2024",
+      name: "Lucid Motors (SWE Intern)",
+      duration: "Summer/Fall 2024",
+      link: "https://www.lucidmotors.com/",
     },
     {
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS18Ncz9jup5M9p9x2ENszCDuu_fZuyq9lq0w&s",
       alt: "Summersalt Logo",
-      name: "SUMMERSALT (Software Engineering Intern) - Summer 2023 to Summer 2024",
+      name: "SUMMERSALT (SWE Intern)",
+      duration: "Summer 2023 - Spring 2024",
+      link: "https://www.summersalt.com/",
     },
   ];
 
   const roleIndex = getRotatingIndex(roles.length, 7500);
   const experienceIndex = getRotatingIndex(experiences.length, 7500);
   const currentExperience = experiences[experienceIndex];
+  const { name: title, duration, link } = currentExperience;
 
   return (
     <>
@@ -88,28 +95,43 @@ export function Header() {
         </Group>
       </Card>
 
-      <div className="flex justify-center mt-4 rounded-lg shadow-lg text-white items-center">
-        <div className="md:w-11/12 p-4 bg-gray-700 border border-gray-600 rounded-lg">
+      <div className="flex justify-center mt-4 rounded-lg shadow-lg text-white">
+        <div className="h-16 flex justify-center px-4 py-2 w-11/12 bg-gray-700 border border-gray-600 rounded-lg">
           <AnimatePresence mode="wait">
-            <motion.div
-              key={currentExperience.name}
-              initial={{ opacity: 0, y: -20, rotateX: 90 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0 }}
-              exit={{ opacity: 0, y: 20, rotateX: -90 }}
-              transition={{ duration: 0.5 }}
-              className="flex items-center space-x-3"
+            <a
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full"
             >
-              <motion.img
-                key={currentExperience.logo}
-                src={currentExperience.logo}
-                alt={currentExperience.alt}
-                className="h-10 w-10 object-contain"
-                initial={{ opacity: 0, filter: "blur(8px)" }}
-                animate={{ opacity: 1, filter: "blur(0px)" }}
-                transition={{ duration: 0.8 }}
-              />
-              <Typing text={currentExperience.name} />
-            </motion.div>
+              <motion.div
+                key={title + duration}
+                initial={{ opacity: 0, y: -20, rotateX: 90 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                exit={{ opacity: 0, y: 20, rotateX: -90 }}
+                transition={{ duration: 0.5 }}
+                className="flex items-center justify-center space-x-3"
+              >
+                <motion.img
+                  key={currentExperience.logo}
+                  src={currentExperience.logo}
+                  alt={currentExperience.alt}
+                  className="h-10 w-10 object-contain"
+                  initial={{ opacity: 0, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 0.8 }}
+                />
+                <div className="hidden md:flex flex-row">
+                  <Text className="text-sm font-medium">
+                    {title}: [{duration}]
+                  </Text>
+                </div>
+                <div className="md:hidden flex flex-col">
+                  <Typing text={title} />
+                  <Typing text={`[${duration}]`} />
+                </div>
+              </motion.div>
+            </a>
           </AnimatePresence>
         </div>
       </div>
