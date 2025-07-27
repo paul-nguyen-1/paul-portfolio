@@ -48,12 +48,24 @@ export function Header() {
             className="md:h-50"
           />
           <div className="absolute bottom-[-.5rem] left-5">
-            <Avatar
-              src="/portfolio.jpg"
-              h={100}
-              w={100}
-              className="rounded-full border-4 border-white shadow-lg"
-            />
+            <motion.div
+              initial={{ y: -300, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 12,
+                mass: 2,
+                restDelta: 0.8,
+              }}
+            >
+              <Avatar
+                src="/portfolio.jpg"
+                h={100}
+                w={100}
+                className="rounded-full border-4 border-white shadow-lg"
+              />
+            </motion.div>
           </div>
         </Card.Section>
 
