@@ -14,6 +14,7 @@
     "@mantine/hooks": "^8.2.1",
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-query": "^5.83.0",
+    "@vercel/analytics": "^1.5.0",
     "clsx": "^2.1.1",
     "motion": "^12.23.9",
     "normalize.css": "^8.0.1",
