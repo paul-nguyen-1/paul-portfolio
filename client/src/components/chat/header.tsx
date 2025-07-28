@@ -127,7 +127,7 @@ export function Header() {
       </Card>
 
       <div className="flex justify-center mt-4 rounded-lg shadow-lg text-white">
-        <div className="h-16 flex justify-center px-4 py-2 w-11/12 bg-gray-700 border border-gray-600 rounded-lg">
+        <div className="h-16 flex items-center justify-center px-4 py-2 w-11/12 bg-gray-700 border border-gray-600 rounded-lg">
           <AnimatePresence mode="wait">
             <a
               href={link}
