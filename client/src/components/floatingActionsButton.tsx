@@ -39,7 +39,7 @@ export default function FloatingActionButton() {
     <div className="relative">
       <AnimatePresence>
         {open && (
-          <div className="absolute bottom-16 flex flex-col items-end space-y-2">
+          <div className="absolute bottom-13 flex flex-col items-end space-y-2">
             {actions.map((action, i) => (
               <motion.a
                 key={action.label}
