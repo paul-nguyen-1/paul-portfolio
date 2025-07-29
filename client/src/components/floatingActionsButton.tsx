@@ -1,9 +1,20 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiPlus, FiMail, FiLinkedin, FiGithub } from "react-icons/fi";
+import {
+  FiPlus,
+  FiMail,
+  FiLinkedin,
+  FiGithub,
+  FiFileText,
+} from "react-icons/fi";
 import { Tooltip } from "@mantine/core";
 
 const actions = [
+  {
+    icon: <FiFileText className="text-[#cfcfe7]" size={18} />,
+    label: "Resume",
+    link: "/resume.pdf",
+  },
   {
     icon: <FiMail className="text-[#cfcfe7]" size={18} />,
     label: "Email",
