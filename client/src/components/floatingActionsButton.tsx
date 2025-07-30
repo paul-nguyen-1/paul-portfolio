@@ -52,7 +52,10 @@ export default function FloatingActionButton() {
                 transition={{ duration: 0.2, delay: i * 0.05 }}
               >
                 <Tooltip label={action.label} position="left" withArrow>
-                  <div className="bg-[#2a2a3b] hover:bg-[#3b3b51] p-3 rounded-full shadow-lg transition">
+                  <div
+                    onClick={() => setOpen(false)}
+                    className="bg-[#2a2a3b] hover:bg-[#3b3b51] p-3 rounded-full shadow-lg transition"
+                  >
                     {action.icon}
                   </div>
                 </Tooltip>
