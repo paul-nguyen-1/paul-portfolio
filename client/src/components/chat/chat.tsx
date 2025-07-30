@@ -103,6 +103,10 @@ const Chat = () => {
     },
     {
       sender: "agent",
+      text: "You can also find my contact info by clicking the '+' button in the bottom right corner of the chat.",
+    },
+    {
+      sender: "agent",
       text: "Feel free to ask me anything!",
     },
   ];
