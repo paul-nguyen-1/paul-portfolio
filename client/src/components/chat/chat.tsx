@@ -11,15 +11,19 @@ import FloatingActionButton from "../floatingActionsButton";
 import { LettersPullUp } from "../lettersPullUp";
 import { FiArrowUp, FiStopCircle } from "react-icons/fi";
 
+type Message = {
+  sender: "user" | "agent";
+  text?: string;
+  link?: { label: string; href: string };
+};
+
 const Chat = () => {
-  const [messages, setMessages] = useState<
-    { sender: "user" | "agent"; text: string }[]
-  >([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const preloadMessages: { sender: "user" | "agent"; text: string }[] = [
+  const preloadMessages: Message[] = [
     { sender: "user", text: "Introduce yourself." },
     { sender: "agent", text: "Hi, my name is Paul." },
     {
@@ -73,11 +77,33 @@ const Chat = () => {
     },
     {
       sender: "agent",
-      text: "And lately, I've been experimenting with photography during walks.",
+      text: "Above all, I love building cool things that make people’s lives easier and more fun!",
+    },
+    { sender: "user", text: "How can I reach you?" },
+    {
+      sender: "agent",
+      link: {
+        label: "paul.nguyen.swe@gmail.com",
+        href: "mailto:paul.nguyen.swe@gmail.com",
+      },
     },
     {
       sender: "agent",
-      text: "Above all, I just love building cool things that make people’s lives easier and more fun. Ask me anything!",
+      link: {
+        label: "linkedin.com/in/paul-nguyen--",
+        href: "https://www.linkedin.com/in/paul-nguyen--/",
+      },
+    },
+    {
+      sender: "agent",
+      link: {
+        label: "github.com/paul-nguyen-1",
+        href: "https://github.com/paul-nguyen-1",
+      },
+    },
+    {
+      sender: "agent",
+      text: "Feel free to ask me anything!",
     },
   ];
 
@@ -89,11 +115,7 @@ const Chat = () => {
     let index = 0;
     const interval = setInterval(() => {
       const next = preloadMessages[index];
-      if (
-        next &&
-        typeof next.sender === "string" &&
-        typeof next.text === "string"
-      ) {
+      if (next) {
         setMessages((prev) => [...prev, next]);
         index++;
       } else {
@@ -130,8 +152,7 @@ const Chat = () => {
       return;
     }
 
-    const userMessage = { sender: "user" as const, text: content };
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => [...prev, { sender: "user", text: content }]);
     setIsTyping(true);
     mutate({ message: content });
     setInput("");
@@ -149,11 +170,7 @@ const Chat = () => {
 
       <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-800 scroll-smooth">
         {messages.map((message, index) => {
-          if (
-            !message ||
-            typeof message.sender !== "string" ||
-            typeof message.text !== "string"
-          ) {
+          if (!message || typeof message.sender !== "string") {
             return null;
           } else {
             return (
@@ -168,7 +185,18 @@ const Chat = () => {
                     : "bg-gray-600 self-start mr-auto text-white"
                 }`}
               >
-                {message.text}
+                {message.link ? (
+                  <a
+                    href={message.link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline text-blue-300 hover:text-blue-200"
+                  >
+                    {message.link.label}
+                  </a>
+                ) : (
+                  message.text
+                )}
               </motion.div>
             );
           }
