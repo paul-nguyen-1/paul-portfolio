@@ -9,7 +9,18 @@ import { ServiceAccount } from 'firebase-admin';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder().addBearerAuth().build();
-  
+  const firebaseServiceAccount = process.env.FIREBASE_CONFIG
+    ? JSON.parse(process.env.FIREBASE_CONFIG)
+    : (JSON.parse(
+        fs.readFileSync('firebase.json').toString(),
+      ) as ServiceAccount);
+
+  if (firebaseAdmin.apps.length === 0) {
+    console.log('Initialize Firebase Application.');
+    firebaseAdmin.initializeApp({
+      credential: firebaseAdmin.credential.cert(firebaseServiceAccount),
+    });
+  }
 
   app.enableCors({
     origin: [
