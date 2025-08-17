@@ -10,6 +10,7 @@ import type {
 import FloatingActionButton from "../floatingActionsButton";
 import { LettersPullUp } from "../lettersPullUp";
 import { FiArrowUp, FiStopCircle } from "react-icons/fi";
+import preloadMessagesRaw from "../../../data/preload_messages.config.json";
 
 type Message = {
   sender: "user" | "agent";
@@ -18,98 +19,11 @@ type Message = {
 };
 
 const Chat = () => {
+  const preloadMessages = preloadMessagesRaw as Message[];
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const preloadMessages: Message[] = [
-    { sender: "user", text: "Introduce yourself." },
-    { sender: "agent", text: "Hi, my name is Paul." },
-    {
-      sender: "agent",
-      text: "I'm a graduate student at UIUC studying Computer Science.",
-    },
-    {
-      sender: "agent",
-      text: "I completed my undergrad at Oregon State University with a 3.8 GPA.",
-    },
-    {
-      sender: "agent",
-      text: "I'm currently involved with CodePath and multiple developer clubs at OSU.",
-    },
-    { sender: "user", text: "What are your technical skills?" },
-    {
-      sender: "agent",
-      text: "I'm comfortable with Python, TypeScript, JavaScript, and Java.",
-    },
-    {
-      sender: "agent",
-      text: "I work with React, NestJS, NextJS, MongoDB, PostgreSQL, Docker, and AWS.",
-    },
-    { sender: "user", text: "What kind of work have you done?" },
-    {
-      sender: "agent",
-      text: "At NASA, I built a dashboard for exercise analytics and a Django backend for 10+ years of data.",
-    },
-    {
-      sender: "agent",
-      text: "At Lucid Motors, I maintained supplier tools, added new features, and built test automation.",
-    },
-    {
-      sender: "agent",
-      text: "At Summersalt, I migrated jQuery to React, improved performance, and implemented CI/CD pipelines.",
-    },
-    { sender: "user", text: "What side projects have you worked on?" },
-    {
-      sender: "agent",
-      text: "I created PromptMail, an AI-integrated email summarizer with secure backend APIs.",
-    },
-    {
-      sender: "agent",
-      text: "I also built BeavsHub, a React app for course reviews, with animated UI and robust testing.",
-    },
-    { sender: "user", text: "What are your hobbies?" },
-    { sender: "agent", text: "I love running and exploring new coffee shops." },
-    {
-      sender: "agent",
-      text: "I also enjoy cooking, listening to live music, and playing board games with friends.",
-    },
-    {
-      sender: "agent",
-      text: "Above all, I love building cool things that make people’s lives easier and more fun!",
-    },
-    { sender: "user", text: "How can I reach you?" },
-    {
-      sender: "agent",
-      link: {
-        label: "paul.nguyen.swe@gmail.com",
-        href: "mailto:paul.nguyen.swe@gmail.com",
-      },
-    },
-    {
-      sender: "agent",
-      link: {
-        label: "linkedin.com/in/paul-nguyen--",
-        href: "https://www.linkedin.com/in/paul-nguyen--/",
-      },
-    },
-    {
-      sender: "agent",
-      link: {
-        label: "github.com/paul-nguyen-1",
-        href: "https://github.com/paul-nguyen-1",
-      },
-    },
-    {
-      sender: "agent",
-      text: "You can also find my contact info by clicking the '+' button in the bottom right corner of the chat.",
-    },
-    {
-      sender: "agent",
-      text: "Feel free to ask me anything!",
-    },
-  ];
 
   useEffect(() => {
     scrollToBottom(messagesEndRef);
