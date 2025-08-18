@@ -3,6 +3,7 @@
   "location": "Houston, Texas",
   "avatar": "/portfolio.jpg",
   "backgroundImage": "https://rpmliving.com/wp-content/uploads/2021/12/houston-bg.png",
+  "appBackgroundImage": "/background.jpg",
 
   "roles": [
     { "label": "Software Engineer", "color": "orange" },

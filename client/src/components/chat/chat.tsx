@@ -10,7 +10,7 @@ import type {
 import FloatingActionButton from "../floatingActionsButton";
 import { LettersPullUp } from "../lettersPullUp";
 import { FiArrowUp, FiStopCircle } from "react-icons/fi";
-import preloadMessagesRaw from "../../../data/preload_messages.config.json";
+import preloadDataRaw from "../../../data/preload_messages.config.json";
 
 type Message = {
   sender: "user" | "agent";
@@ -18,8 +18,14 @@ type Message = {
   link?: { label: string; href: string };
 };
 
+type PreloadData = {
+  messages: Message[];
+  suggestedQuestions: string[];
+};
+
 const Chat = () => {
-  const preloadMessages = preloadMessagesRaw as Message[];
+  const { messages: preloadMessages, suggestedQuestions } =
+    preloadDataRaw as PreloadData;
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -42,7 +48,7 @@ const Chat = () => {
     }, 800);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [preloadMessages]);
 
   const { mutate } = useMutation({
     mutationFn: (payload: SendMessageInput) =>
@@ -75,12 +81,6 @@ const Chat = () => {
     mutate({ message: content });
     setInput("");
   };
-
-  const suggestedQuestions = [
-    "What are your hobbies?",
-    "What are your strengths as an engineer?",
-    "Which tech stacks are you most experienced with?",
-  ];
 
   return (
     <div className="h-screen md:h-[90vh] md:w-2/5 bg-gray-800 text-white md:rounded-xl flex flex-col shadow-xl overflow-hidden">
