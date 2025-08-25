@@ -1,0 +1,46 @@
+{
+  "name": "Paul Nguyen",
+  "location": "Houston, Texas",
+  "avatar": "/portfolio.jpg",
+  "backgroundImage": "https://rpmliving.com/wp-content/uploads/2021/12/houston-bg.png",
+  "appBackgroundImage": "/background.jpg",
+
+  "roles": [
+    { "label": "Software Engineer", "color": "orange" },
+    { "label": "Graduate Student", "color": "blue" }
+  ],
+
+  "experiences": [
+    {
+      "logo": "https://images.seeklogo.com/logo-png/19/2/nasa-logo-png_seeklogo-195796.png",
+      "alt": "NASA Logo",
+      "name": "NASA (SWE Intern)",
+      "duration": "Spring 2025",
+      "link": "https://www.nasa.gov/"
+    },
+    {
+      "logo": "https://media.licdn.com/dms/image/v2/C560BAQH7XEcX6E4M7w/company-logo_200_200/company-logo_200_200/0/1630642979756/lucidmotors_logo?e=1756339200&v=beta&t=zN-0pYxAUiElWsqCrtBzGHqRbWHwTyd58lUlnWXlleA",
+      "alt": "Lucid Motors Logo",
+      "name": "Lucid Motors (SWE Intern)",
+      "duration": "Summer/Fall 2024",
+      "link": "https://www.lucidmotors.com/"
+    },
+    {
+      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS18Ncz9jup5M9p9x2ENszCDuu_fZuyq9lq0w&s",
+      "alt": "Summersalt Logo",
+      "name": "SUMMERSALT (SWE Intern)",
+      "duration": "Summer 2023 - Spring 2024",
+      "link": "https://www.summersalt.com/"
+    }
+  ],
+
+  "school": {
+    "programUrl": "https://siebelschool.illinois.edu/academics/graduate/professional-mcs",
+    "logos": {
+      "smSrc": "https://brand.illinois.edu/wp-content/uploads/2024/02/Block-I-orange-blue-background.png",
+      "smAlt": "UIUC Logo",
+      "lgSrc": "https://images.squarespace-cdn.com/content/v1/623126b50d2dfb281caaafd3/043c224d-520f-40be-a3b2-408ce588d8b6/University-of-Illinois-Urbana-Champaign-logo.jpg",
+      "lgAlt": "UIUC"
+    }
+  }
+}
