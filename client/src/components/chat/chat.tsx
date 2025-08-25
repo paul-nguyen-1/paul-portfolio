@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { postData, scrollToBottom } from "../../../utils/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import { postData, scrollToBottom, timeAgo } from "../../../utils/utils";
 import { Header } from "./header";
 import { useMutation } from "@tanstack/react-query";
 import type {
@@ -16,10 +16,11 @@ type Message = {
   sender: "user" | "agent";
   text?: string;
   link?: { label: string; href: string };
+  createdAt: number;
 };
 
 type PreloadData = {
-  messages: Message[];
+  messages: Omit<Message, "createdAt">[];
   suggestedQuestions: string[];
 };
 
@@ -40,13 +41,12 @@ const Chat = () => {
     const interval = setInterval(() => {
       const next = preloadMessages[index];
       if (next) {
-        setMessages((prev) => [...prev, next]);
+        setMessages((prev) => [...prev, { ...next, createdAt: Date.now() }]);
         index++;
       } else {
         clearInterval(interval);
       }
     }, 800);
-
     return () => clearInterval(interval);
   }, [preloadMessages]);
 
@@ -57,14 +57,21 @@ const Chat = () => {
         payload
       ),
     onSuccess: (res) => {
-      setMessages((prev) => [...prev, { sender: "agent", text: res.reply }]);
+      setMessages((prev) => [
+        ...prev,
+        { sender: "agent", text: res.reply, createdAt: Date.now() },
+      ]);
       setIsTyping(false);
     },
     onError: (error) => {
       console.error("Mutation failed:", error);
       setMessages((prev) => [
         ...prev,
-        { sender: "agent", text: "Sorry, something went wrong." },
+        {
+          sender: "agent",
+          text: "Sorry, something went wrong.",
+          createdAt: Date.now(),
+        },
       ]);
       setIsTyping(false);
     },
@@ -75,8 +82,10 @@ const Chat = () => {
     if (!content.trim()) {
       return;
     }
-
-    setMessages((prev) => [...prev, { sender: "user", text: content }]);
+    setMessages((prev) => [
+      ...prev,
+      { sender: "user", text: content, createdAt: Date.now() },
+    ]);
     setIsTyping(true);
     mutate({ message: content });
     setInput("");
@@ -85,58 +94,105 @@ const Chat = () => {
   return (
     <div className="h-screen md:h-[90vh] md:w-2/5 bg-gray-800 text-white md:rounded-xl flex flex-col shadow-xl overflow-hidden">
       <Header />
-
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-800 scroll-smooth">
-        {messages.map((message, index) => {
-          if (!message || typeof message.sender !== "string") {
-            return null;
-          } else {
+      <div className="relative flex-1 overflow-y-auto p-4 space-y-3 bg-gray-800 scroll-smooth ">
+        <AnimatePresence initial={false}>
+          {messages.map((message, index) => {
+            const isUser = message.sender === "user";
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`p-3 rounded-xl max-w-xs ${
-                  message.sender === "user"
-                    ? "bg-blue-500 self-end ml-auto text-white"
-                    : "bg-gray-600 self-start mr-auto text-white"
+                layout
+                initial={{ opacity: 0, y: 18, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -12, scale: 0.98 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 520,
+                  damping: 38,
+                  mass: 0.7,
+                }}
+                className={`flex max-w-[520px] items-start gap-3 rounded-2xl p-4 transition-all duration-200 ease-in-out hover:scale-[103%] transform-gpu ${
+                  isUser
+                    ? "ml-auto bg-blue-500"
+                    : "mr-auto bg-white/10 backdrop-blur-md"
                 }`}
+                style={{
+                  boxShadow:
+                    "0 0 0 1px rgba(0,0,0,.03), 0 2px 4px rgba(0,0,0,.05), 0 12px 24px rgba(0,0,0,.05)",
+                }}
               >
-                {message.link ? (
-                  <a
-                    href={message.link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline text-blue-300 hover:text-blue-200"
-                  >
-                    {message.link.label}
-                  </a>
-                ) : (
-                  message.text
-                )}
+                <div className="flex size-10 items-center justify-center rounded-2xl shrink-0 bg-white/20">
+                  <span className="text-lg">{isUser ? "🧑‍💻" : "🤖"}</span>
+                </div>
+
+                <div className="flex flex-col overflow-hidden text-left text-white">
+                  <div className="flex items-center gap-2 text-sm sm:text-base font-medium">
+                    <span>{isUser ? "You" : "Alfred"}</span>
+                    <span className="opacity-70">·</span>
+                    <span className="opacity-70 text-xs">
+                      {timeAgo(message.createdAt)}
+                    </span>
+                  </div>
+                  <div className="mt-1 text-sm break-words">
+                    {message.link ? (
+                      <a
+                        href={message.link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline hover:opacity-80"
+                      >
+                        {message.link.label}
+                      </a>
+                    ) : (
+                      message.text
+                    )}
+                  </div>
+                </div>
               </motion.div>
             );
-          }
-        })}
+          })}
 
-        {isTyping && (
-          <motion.div
-            key="typing"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              delay: 0.5,
-              duration: 1,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-            className="bg-gray-600 text-white p-3 rounded-xl max-w-xs self-start mr-auto"
-          >
-            Give me a second... I'm thinking
-          </motion.div>
-        )}
+          {isTyping && (
+            <motion.div
+              key="typing"
+              layout
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.5,
+              }}
+              className="flex max-w-[520px] items-start gap-3 rounded-2xl p-4 mr-auto bg-white/10 backdrop-blur-md"
+              style={{
+                boxShadow:
+                  "0 0 0 1px rgba(0,0,0,.03), 0 2px 4px rgba(0,0,0,.05), 0 12px 24px rgba(0,0,0,.05)",
+              }}
+            >
+              <div className="flex size-10 items-center justify-center rounded-2xl shrink-0 bg-white/20">
+                <span className="text-lg">🤖</span>
+              </div>
+              <div className="flex flex-col text-white">
+                <div className="text-sm sm:text-base font-medium">
+                  Alfred <span className="opacity-70">·</span>{" "}
+                  <span className="opacity-70">typing…</span>
+                </div>
+                <motion.div
+                  initial={{ opacity: 0.6 }}
+                  animate={{ opacity: 1 }}
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  }}
+                  className="mt-1 text-sm"
+                >
+                  Give me a second... I’m thinking
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-background" />
         <div ref={messagesEndRef} />
       </div>
 

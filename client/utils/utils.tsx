@@ -45,3 +45,32 @@ export async function postData<TData, TVariables>(
 
   return response.json();
 }
+
+export function timeAgo(timestamp: number | string | Date): string {
+  const now = Date.now();
+  const time =
+    typeof timestamp === "number" ? timestamp : new Date(timestamp).getTime();
+
+  const diff = Math.floor((now - time) / 1000);
+
+  if (diff < 60) {
+    return "just now";
+  }
+  if (diff < 3600) {
+    return `${Math.floor(diff / 60)} min ago`;
+  }
+  if (diff < 86400) {
+    return `${Math.floor(diff / 3600)} hours ago`;
+  }
+  if (diff < 604800) {
+    return `${Math.floor(diff / 86400)} days ago`;
+  }
+
+  const date = new Date(time);
+  return date.toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+    year:
+      date.getFullYear() !== new Date().getFullYear() ? "numeric" : undefined,
+  });
+}
