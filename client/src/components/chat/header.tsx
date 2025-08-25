@@ -1,6 +1,6 @@
 import { Card, Image, Text, Badge, Avatar } from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
-import { getRotatingIndex } from "../../lib/utils/utils";
+import { getRotatingIndex } from "../../../utils/utils";
 import { Typing } from "../typing";
 import profileConfigRaw from "../../../data/profile.config.json";
 

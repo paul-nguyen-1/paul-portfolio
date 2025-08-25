@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { postData, scrollToBottom } from "../../lib/utils/utils";
+import { postData, scrollToBottom } from "../../../utils/utils";
 import { Header } from "./header";
 import { useMutation } from "@tanstack/react-query";
 import type {
   SendMessageInput,
   SendMessageResponse,
-} from "../../lib/utils/types";
+} from "../../../utils/types";
 import FloatingActionButton from "../floatingActionsButton";
 import { LettersPullUp } from "../lettersPullUp";
 import { FiArrowUp, FiStopCircle } from "react-icons/fi";

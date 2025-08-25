@@ -1,4 +1,4 @@
-import { cn } from "../lib/utils/cn";
+import { cn } from "../../utils/cn";
 import { motion, useInView } from "framer-motion";
 import * as React from "react";
 
