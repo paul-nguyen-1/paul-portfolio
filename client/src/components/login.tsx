@@ -9,17 +9,27 @@ import {
   Title,
   Text,
   Paper,
-  Divider,
 } from "@mantine/core";
+import { useNavigate } from "@tanstack/react-router";
+import { useUser } from "../hooks/useUser";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const { login } = useUser();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
 
-  function handleLogin(e: { preventDefault: () => void }) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    console.log({ email, password, remember });
+    try {
+      const apiBase = import.meta.env.VITE_ALFRED_BACKEND_ENDPOINT as string;
+      await login(email, password, apiBase);
+      navigate({ to: "/" });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
@@ -82,9 +92,9 @@ export default function Login() {
                 checked={remember}
                 onChange={(e) => setRemember(e.currentTarget.checked)}
               />
-              <Button variant="subtle" color="gray">
+              {/* <Button variant="subtle" color="gray">
                 Forgot password?
-              </Button>
+              </Button> */}
             </Group>
             <Button type="submit" fullWidth radius="md" color="gray.8">
               Continue
@@ -92,25 +102,13 @@ export default function Login() {
           </Stack>
         </form>
 
-        <Divider
-          my="lg"
-          label={
-            <Text color="dimmed" size="xs">
-              or
-            </Text>
-          }
-          labelPosition="center"
-        />
-
-        <Stack>
-          <Button variant="default" fullWidth radius="md">
-            Continue with Google
-          </Button>
-        </Stack>
-
         <Text size="sm" mt="lg">
           Don't have an account?{" "}
-          <Button variant="subtle" color="gray">
+          <Button
+            variant="subtle"
+            color="gray"
+            onClick={() => navigate({ to: "/createUser" })}
+          >
             Create one
           </Button>
         </Text>

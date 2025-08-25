@@ -2,25 +2,40 @@ import { useState } from "react";
 import {
   TextInput,
   PasswordInput,
-  Checkbox,
   Button,
   Stack,
   Title,
   Text,
   Paper,
-  Divider,
 } from "@mantine/core";
+import { postData } from "../../utils/utils";
+import { useNavigate } from "@tanstack/react-router";
+import { useUser } from "../hooks/useUser";
 
 export default function CreateUser() {
-  const [name, setName] = useState("");
+  const navigate = useNavigate();
+  const { login } = useUser();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false);
 
-  function handleCreate(e: { preventDefault: () => void }) {
+  async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
-    console.log({ name, email, password, confirmPassword, termsAccepted });
+
+    await postData(
+      `${import.meta.env.VITE_ALFRED_BACKEND_ENDPOINT}/user/register`,
+      { firstName, lastName, email, password }
+    );
+
+    await login(
+      email,
+      password,
+      `${import.meta.env.VITE_ALFRED_BACKEND_ENDPOINT}`
+    );
+
+    navigate({ to: "/" });
   }
 
   return (
@@ -50,9 +65,21 @@ export default function CreateUser() {
         <form onSubmit={handleCreate}>
           <Stack>
             <TextInput
-              placeholder="Full name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder="First Name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              styles={{
+                input: {
+                  backgroundColor: "#2a2a2a",
+                  color: "#fff",
+                  borderColor: "#333",
+                },
+              }}
+            />
+            <TextInput
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
               styles={{
                 input: {
                   backgroundColor: "#2a2a2a",
@@ -97,40 +124,19 @@ export default function CreateUser() {
                 },
               }}
             />
-            <Checkbox
-              label={
-                <Text size="sm" color="dimmed">
-                  I accept the terms and conditions
-                </Text>
-              }
-              checked={termsAccepted}
-              onChange={(e) => setTermsAccepted(e.currentTarget.checked)}
-            />
             <Button type="submit" fullWidth radius="md" color="gray.8">
               Sign Up
             </Button>
           </Stack>
         </form>
 
-        <Divider
-          my="lg"
-          label={
-            <Text color="dimmed" size="xs">
-              or
-            </Text>
-          }
-          labelPosition="center"
-        />
-
-        <Stack>
-          <Button variant="default" fullWidth radius="md">
-            Sign up with Google
-          </Button>
-        </Stack>
-
         <Text size="sm" mt="lg" color="dimmed">
           Already have an account?{" "}
-          <Button variant="subtle" color="gray">
+          <Button
+            variant="subtle"
+            color="gray"
+            onClick={() => navigate({ to: "/login" })}
+          >
             Login
           </Button>
         </Text>
